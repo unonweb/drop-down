@@ -1,0 +1,158 @@
+@layer default {
+	drop-down {
+		--_color-background: var(--background, white);
+		display: block;
+		overflow-x: visible;
+		position: relative;
+		width: fit-content;
+
+		>.content {
+			visibility: hidden;
+			list-style: none;
+			padding: 0;
+			margin-top: 0.5rem;
+			width: max-content;
+		}
+
+		>un-button .icon {
+			display: inline-block;
+			transition: transform ease-in-out 0.3s;
+		}
+
+		>content li {
+			margin-bottom: 2px;
+		}
+	}
+
+	drop-down[data-overlay="true"] {
+		>.content {
+			position: absolute;
+			top: 100%;
+			background-color: var(--_color-background);
+		}
+
+		>.content.offset {
+			right: 100%;
+			margin-right: 40px;
+			top: 100%;
+		}
+	}
+
+	drop-down[data-overlay="false"][data-state="on"] {
+		>.content {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+		}
+
+		>.content {
+			position: static;
+		}
+	}
+
+	drop-down[data-overlay="false"][data-state="off"] {
+		>.content {
+			position: absolute;
+		}
+	}
+
+	/* [data-state="on"] */
+	drop-down[data-state="on"] {
+		>.content {
+			visibility: visible;
+		}
+
+		>un-button .icon {
+			transform: rotate(180deg);
+		}
+	}
+
+
+	/* [data-anim="slide-rl"] */
+	drop-down[data-anim="slide-rl"] {
+		>.content {
+			--duration: 0.5s;
+			--delay: 2s;
+			transition-property: visibility;
+			transition-duration: calc(var(--duration) + 0.1s);
+			transition-timing-function: ease-in-out;
+		}
+
+		>.content li {
+			transition-property: translate, opacity;
+			transition-duration: var(--duration);
+			transition-timing-function: ease-in-out;
+			transition-delay: calc(60ms * var(--delay));
+			/* defined on <li> */
+		}
+	}
+
+	drop-down[data-anim="slide-rl"][data-state="off"] {
+		>.content li {
+			translate: 100%;
+			opacity: 0;
+		}
+	}
+
+	drop-down[data-anim="slide-rl"][data-state="on"] {
+		>.content li {
+			translate: 0%;
+			opacity: 1;
+		}
+	}
+
+	/* [data-anim="softdrop"] */
+	drop-down[data-anim="softdrop"] {
+		>.content {
+			transition: translate ease 0.3s;
+		}
+	}
+
+	drop-down[data-anim="softdrop"][data-state="on"] {
+		>.content {
+			translate: 0% 0%;
+		}
+	}
+
+	drop-down[data-anim="softdrop"][data-state="off"] {
+		>.content {
+			translate: 0% -1em;
+			visibility: hidden;
+		}
+	}
+
+	/* [data-anim="unfold"] */
+	/* does not work for nested drop-downs */
+	drop-down[data-anim="unfold"][data-state="on"] {
+		>.content li {
+			opacity: 0;
+			animation-name: unfold;
+			animation-duration: 300ms;
+			animation-timing-function: ease-in-out;
+			animation-fill-mode: forwards;
+			animation-delay: var(--delay);
+		}
+	}
+
+	@keyframes softdrop {
+		0% {
+			translate: 0% -1em;
+		}
+
+		100% {
+			translate: 0% 0%;
+		}
+	}
+
+	@keyframes unfold {
+		0% {
+			opacity: 0;
+			transform: rotateX(-90deg);
+		}
+
+		100% {
+			opacity: 1;
+			transform: rotateX(0deg);
+		}
+	}
+}
