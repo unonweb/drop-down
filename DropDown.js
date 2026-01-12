@@ -1,7 +1,4 @@
-import CeBase from '../_classes/CeBase.js'
-import Button from '../button/button.js'
-
-export default class DropDown extends CeBase {
+export default class DropDown extends HTMLElement {
 	/*
 		@Attributes:
 			[data-state]
@@ -40,7 +37,6 @@ export default class DropDown extends CeBase {
 	}
 
 	connectedCallback() {
-		super.connectedCallback()
 
 		if (!this.dataset.state) {
 			console.warn('this.dataset.state', this.dataset.state, 'This can cause FOUC!')
@@ -218,7 +214,4 @@ export default class DropDown extends CeBase {
 			this._dest.classList.add('off')
 		}
 	}
-}
-if (window.customElements.get('drop-down') === undefined) {
-	window.customElements.define('drop-down', DropDown);	
 }
